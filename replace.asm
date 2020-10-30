@@ -40,21 +40,22 @@ main:
 	mov rdx,1
 	syscall
 	
+
+	xor rdx,rdx
+	RDRAND rax		; divide part is here
+	mov rbx,7
+	div rbx
+	mov rbx,rdx
+
+	add rbx,48
+	mov [test],rbx
+
 	mov rax,1
 	mov rdi,1
-	mov test,[num_buff] 	; error is here
 	mov rsi,test
 	mov rdx,2
 	syscall
-
-	xor rax,rax
-	RDRAND rax
-	xor r8,r8		; divide part is here
-	mov r8,8
-	div r8
-	mov r9,rdx
-	
-	
+		
 	mov rax,1
 	mov rdi,1
 	mov rsi,new_line
