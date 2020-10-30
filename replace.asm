@@ -11,7 +11,7 @@ random_val:	resb 	2
 num_buff:       resb    2
 char_buff:      resb    1
 seed:	 	resb 	2
-	
+test:		resb 	2
         section .text
         global main
 
@@ -31,6 +31,26 @@ main:
 	mov rax,1 		; displaying stored num 
 	mov rdi,1
 	mov rsi,num_buff
+	mov rdx,2
+	syscall
+
+	mov rax,1
+	mov rdi,1
+	mov rsi,new_line
+	mov rdx,1
+	syscall
+	
+	mov rax,1
+	mov rdi,1
+	mov test,[num_buff] 	; error is here
+	mov rsi,test
+	mov rdx,2
+	syscall
+
+	mov rax,1
+	mov rdi,1
+	mov rsi,new_line
+	mov rdx,1
 	syscall
 
 	;; instead of mod use divq: quotient stored in rax, remainder stored in rdx
