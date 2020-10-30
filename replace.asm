@@ -47,6 +47,14 @@ main:
 	mov rdx,2
 	syscall
 
+	xor rax,rax
+	RDRAND rax
+	xor r8,r8		; divide part is here
+	mov r8,8
+	div r8
+	mov r9,rdx
+	
+	
 	mov rax,1
 	mov rdi,1
 	mov rsi,new_line
