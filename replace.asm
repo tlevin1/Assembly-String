@@ -343,7 +343,9 @@ main:
         add rbx,97              
         mov [seed],rbx
 
-	mov r10,seed
+	mov r9, [seed]
+        mov [r10],r9
+	
 	mov rax,1
         mov rdi,1
         mov rsi,random_string            ;print entire string
