@@ -18,6 +18,7 @@ seed:		resb 	2
         global main
 
 main:
+	mov r10,random_string
 	mov r8,random_string
         mov rax,1		; displaying question
         mov rdi,1
@@ -196,12 +197,6 @@ main:
         inc r8
 
 	
-        mov rax,1
-        mov rdi,1
-        mov rsi,random_string            ;print entire string
-        mov rdx,len_s
-        syscall
-
 	xor rdx,rdx            ;10th LETTER
         RDRAND rax              ; divide part is here for second letter
         mov rbx,25              ;changed to 25 for alphabet 0-25/ a-z
@@ -314,14 +309,52 @@ main:
         mov [r8],r9
         inc r8
 
-
-        mov rax,1
+	mov rax,1
         mov rdi,1
-        mov rsi,new_line	;displaying new line at end
+        mov rsi,random_string            ;print entire string
+        mov rdx,len_s
+        syscall
+
+	mov rax,1
+        mov rdi,1
+        mov rsi,new_line        ;displaying new line at end
         mov rdx,1
         syscall
 
+	
+        mov rax,1           
+        mov rdi,1
+        mov rsi,random_mssg	; printing modified string
+        mov rdx,len_m
+        syscall
 
+	mov r11,num_buff
+	sub r11,1
+	add r10, num_buff
+	
+	
+	xor rdx,rdx            ;generating new random letter to replace
+        RDRAND rax              
+        mov rbx,25             
+
+        div rbx
+        mov rbx,rdx
+
+        add rbx,97              
+        mov [seed],rbx
+
+	mov r10,seed
+	mov rax,1
+        mov rdi,1
+        mov rsi,random_string            ;print entire string
+        mov rdx,len_s
+        syscall
+
+	mov rax,1
+        mov rdi,1
+        mov rsi,new_line        ;displaying new line at end
+        mov rdx,1
+        syscall
 
 
 	;; instead of mod use divq: quotient stored in rax, remainder stored in rdx
