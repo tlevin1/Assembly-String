@@ -15,13 +15,13 @@ len_s:		equ $-random_string
 	section	.bss
 num_buff:       resb    2
 char_buff:  	resb 	2
-seed:		resb 	2
+seed:		resb 	1
+test:		resb 	2
 
 	section .text
         global main
 
 main:
-	mov r10,random_string
 	mov r8,random_string
         mov rax,1		; displaying question
         mov rdi,1
@@ -50,7 +50,7 @@ main:
 
         mov rax,1
         mov rdi,1
-        mov rsi, new_line
+        mov rsi,new_line
         mov rdx,1
 
 	
@@ -66,8 +66,8 @@ main:
 
 	
 			
-	mov r9, [seed]	
-	mov [r8],r9		
+	mov r9b,[seed]	
+	mov [r8],r9b		
 	inc r8			
 	
 	
@@ -83,8 +83,8 @@ main:
 
 	
 	
-        mov r9, [seed]
-        mov [r8],r9
+        mov r9b, [seed]
+        mov [r8],r9b
         inc r8
 
 	xor rdx,rdx            ;3rd LETTER
@@ -99,8 +99,8 @@ main:
 
 
 
-        mov r9, [seed]
-        mov [r8],r9
+        mov r9b, [seed]
+        mov [r8],r9b
         inc r8
 
 	xor rdx,rdx            ;4th LETTER
@@ -115,8 +115,8 @@ main:
 
 
 
-        mov r9, [seed]
-        mov [r8],r9
+        mov r9b, [seed]
+        mov [r8],r9b
         inc r8
 	
 	xor rdx,rdx            ;5th LETTER
@@ -131,8 +131,8 @@ main:
 
 
 
-        mov r9, [seed]
-        mov [r8],r9
+        mov r9b, [seed]
+        mov [r8],r9b
         inc r8
 	
 	xor rdx,rdx            ;6th LETTER
@@ -147,8 +147,8 @@ main:
 
 
 
-        mov r9, [seed]
-        mov [r8],r9
+        mov r9b, [seed]
+        mov [r8],r9b
         inc r8
 
 	xor rdx,rdx            ;7th LETTER
@@ -163,8 +163,8 @@ main:
 
 
 
-        mov r9, [seed]
-        mov [r8],r9
+        mov r9b, [seed]
+        mov [r8],r9b
         inc r8
 	
 	xor rdx,rdx            ;8th LETTER
@@ -179,8 +179,8 @@ main:
 
 
 
-        mov r9, [seed]
-        mov [r8],r9
+        mov r9b, [seed]
+        mov [r8],r9b
         inc r8
 
 	xor rdx,rdx            ;9th LETTER
@@ -195,8 +195,8 @@ main:
 
 
 
-        mov r9, [seed]
-        mov [r8],r9
+        mov r9b, [seed]
+        mov [r8],r9b
         inc r8
 
 	
@@ -212,8 +212,8 @@ main:
 
 
 
-        mov r9, [seed]
-        mov [r8],r9
+        mov r9b, [seed]
+        mov [r8],r9b
         inc r8
 
 	xor rdx,rdx            ;11th LETTER
@@ -228,8 +228,8 @@ main:
 
 
 
-        mov r9, [seed]
-        mov [r8],r9
+        mov r9b, [seed]
+        mov [r8],r9b
         inc r8
 
 	xor rdx,rdx            ;12th LETTER
@@ -244,8 +244,8 @@ main:
 
 
 
-        mov r9, [seed]
-        mov [r8],r9
+        mov r9b, [seed]
+        mov [r8],r9b
         inc r8
 
 	xor rdx,rdx            ;13th LETTER
@@ -260,8 +260,8 @@ main:
 
 
 
-        mov r9, [seed]
-        mov [r8],r9
+        mov r9b, [seed]
+        mov [r8],r9b
         inc r8
 
 	xor rdx,rdx            ;14th LETTER
@@ -276,8 +276,8 @@ main:
 
 
 
-        mov r9, [seed]
-        mov [r8],r9
+        mov r9b, [seed]
+        mov [r8],r9b
         inc r8
 
 	xor rdx,rdx            ;15th LETTER
@@ -292,12 +292,12 @@ main:
 
 
 
-        mov r9, [seed]
-        mov [r8],r9
+        mov r9b, [seed]
+        mov [r8],r9b
         inc r8
 
-	xor rdx,rdx            ;16th LETTER
-        RDRAND rax              ; divide part is here for 16th letter
+	xor rdx,rdx		;16th LETTER
+        RDRAND rax             ; divide part is here for 16th letter
         mov rbx,25              ;changed to 25 for alphabet 0-25/ a-z
 
         div rbx
@@ -305,13 +305,11 @@ main:
 
         add rbx,97              ;97 for ascii letter lowercase a -  range 97-122
         mov [seed],rbx
+	
+	mov r9b,[seed]
+        mov [r8],r9b
 
-
-
-        mov r9, [seed]
-        mov [r8],r9
-        inc r8
-
+	
 	mov rax,1
         mov rdi,1
         mov rsi,random_string            ;print entire string
@@ -330,10 +328,6 @@ main:
         mov rsi,random_mssg	; printing modified string
         mov rdx,len_m
         syscall
-
-	mov r11,num_buff
-	sub r11,1
-	add r10, num_buff
 	
 	
 	xor rdx,rdx            ;generating new random letter to replace
@@ -345,6 +339,7 @@ main:
 
         add rbx,97              
         mov [seed],rbx
+	
 	;; Replacement Part
 	;;  attempt to store first digit from num buff
 	xor r11,r11
@@ -386,7 +381,6 @@ main:
         mov rsi,new_line        ;displaying new line at end
         mov rdx,1
         syscall
-
 
 	;; instead of mod use divq: quotient stored in rax, remainder stored in rdx
 exit:
