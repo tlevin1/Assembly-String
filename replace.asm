@@ -343,21 +343,21 @@ main:
 	;; Replacement Part
 	;;  attempt to store first digit from num buff
 	xor r11,r11
-	mov r11b, [num_buff]
+	mov r11b,byte[num_buff]
 	sub r11b,48
-	
-	mov r11b, 10
-	mul r11b
+
+	xor r14,r14
+	mov r14b,10
+	mov al,r11b
+	mul r14b
 	
 	xor r12, r12
 	xor r13, r13
-	xor r14, r14
-	mov r12, num_buff
+	mov r12,num_buff
 
-	add r12, 1 		; adding 1 to get 2nd digit
+	add r12,1 		; adding 1 to get 2nd digit
 	mov r13b,[r12]		; put 2nd digit in r13b
 	sub r13b,48
-	mov al,r11b
 
 	mov r11b,al
 	add r11b,r13b
@@ -366,7 +366,7 @@ main:
 	mov r12,random_string
 	xor r13,r13
 	mov r13b,[seed]
-	add r12,r11
+	add r12b,r11b
 	mov [r12],r13b
 
 	
