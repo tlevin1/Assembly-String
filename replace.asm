@@ -1,5 +1,8 @@
 ; Project 3
-;Purpose: write and assemble a program to prompt the user for a number from 1-16 and display the unedited string to the user and then  display the string with location entered replaced with a random letter
+; Authors: Tehila Levin & Rooklyn Kline 
+; Purpose: Write and assemble a program to prompt the user for a number from 1-16
+; and display the unedited string to the user and then display the string with location 
+; entered replaced with a random letter
 
         section .data		
 request:        db "Enter a location in the string you want to replace 1-16",10
@@ -14,9 +17,7 @@ len_s:		equ $-random_string
 
 	section	.bss
 num_buff:       resb    2
-char_buff:  	resb 	2
 seed:		resb 	1
-test:		resb 	2
 
 	section .text
         global main
@@ -382,7 +383,6 @@ main:
         mov rdx,1
         syscall
 
-	;; instead of mod use divq: quotient stored in rax, remainder stored in rdx
 exit:
         mov rax,60
         xor rdi,rdi
